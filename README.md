@@ -263,7 +263,7 @@ Este token es necesario para descargar modelos privados de pyannote/Whisper.
 
 MIT — puedes usar y modificar este proyecto libremente.
 
-```
+
 
 ---
 
