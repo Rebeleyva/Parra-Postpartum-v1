@@ -74,7 +74,7 @@ def transcripcion_de_audio(audio_path, diarization_results, output_dir="."):
         # Llama al pipeline para obtener la transcripción del segmento
         result = asr_pipeline(
             {"raw": segment_audio, "sampling_rate": sample_rate},
-            # generate_kwargs={"language": "<|es|>"}  # Puedes descomentar si usas forcing de idioma
+           
         )
         transcriptions.append(result["text"].lower())  # Agrega la transcripción en minúsculas
 
