@@ -346,29 +346,6 @@ Este proyecto utiliza el **CIEMPIESS TEST CORPUS** para la evaluación y prueba 
 > Las grabaciones provienen de "RADIO-IUS", estación de la Facultad de Derecho de la UNAM, y el corpus fue cuidadosamente anotado y verificado para asegurar su calidad.
 > Se distribuye bajo la licencia [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/) y está disponible en [Hugging Face Datasets](https://huggingface.co/datasets/ciempiess/ciempiess_test) y en [LDC2019S07](https://catalog.ldc.upenn.edu/LDC2019S07).
 
-**Referencia:**
-
-```bibtex
-@misc{carlosmenaciempiesstest2019,
-  title={CIEMPIESS TEST CORPUS: Audio and Transcripts of Mexican Spanish Broadcast Conversations.},
-  ldc_catalog_no={LDC2019S07},
-  DOI={https://doi.org/10.35111/xdx5-n815},
-  author={Hernandez Mena, Carlos Daniel},
-  journal={Linguistic Data Consortium, Philadelphia},
-  year={2019},
-  url={https://catalog.ldc.upenn.edu/LDC2019S07},
-}
-```
-
-**Cómo citar este recurso en tu trabajo:**
-
-> Hernandez Mena, Carlos Daniel. *CIEMPIESS TEST CORPUS: Audio and Transcripts of Mexican Spanish Broadcast Conversations.* Linguistic Data Consortium, Philadelphia, 2019. DOI: [10.35111/xdx5-n815](https://doi.org/10.35111/xdx5-n815).
-
-**Reconocimientos especiales:**
-
-* Al programa de servicio social "Desarrollo de Tecnologías del Habla" de la Facultad de Ingeniería, UNAM.
-* A la Lic. César Gabriel Alanis Merchand y el Mtro. Ricardo Rojas Arévalo de la Facultad de Derecho, UNAM, por la donación de grabaciones.
-* A Mónica Alejandra Ruiz López por la verificación de las transcripciones.
 
 
 ---
