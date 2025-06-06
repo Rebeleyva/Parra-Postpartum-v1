@@ -54,191 +54,152 @@ El programa sigue este **flujo automático** para cualquier archivo de audio o v
 
 ## 🛠️ Instalación rápida
 
-```sh
-git clone https://github.com/tu_usuario/tu_repo.git
-cd tu_repo
-python3 -m pip install --upgrade pip
-python3 scripts/setup_env.py
+    ```sh
+    git clone https://github.com/tu_usuario/tu_repo.git
+    cd tu_repo
+    python3 -m pip install --upgrade pip
+    python3 scripts/setup_env.py
 
 ---
 
-Configura tu archivo de entorno
-Copia el ejemplo y pega tu token de HuggingFace:
-
-sh
-cp .env.example .env
-Edita el archivo .env para incluir tu token:
-
-ini
-HUGGINGFACE_TOKEN=tu_token_de_huggingface_aqui
-(Opcional) Instala ffmpeg si no lo tienes
-Ubuntu/Debian: sudo apt install ffmpeg
-
-MacOS: brew install ffmpeg
-
-Windows: Descarga desde ffmpeg.org
+1.  shCopyEditpython3 -m pip install --upgrade pippython3 setup\_env.pyEsto instalará todas las dependencias en un entorno virtual llamado **Parra-Postpartum-v1**.
+    
+2.  Copia el ejemplo y pega tu token de HuggingFace:shCopyEditcp .env.example .envEdita el archivo .env para incluir tu token:iniCopyEditHUGGINGFACE\_TOKEN=tu\_token\_de\_huggingface\_aqui
+    
+3.  **(Opcional) Instala ffmpeg si no lo tienes**
+    
+    *   **Ubuntu/Debian:** sudo apt install ffmpeg
+        
+    *   **MacOS:** brew install ffmpeg
+        
+    *   **Windows:** Descarga desde [ffmpeg.org](https://ffmpeg.org/)
+        
 
 ⚡ Uso del programa
-Activar entorno virtual
-En Mac/Linux:
+------------------
 
-sh
-source Parra-Postpartum-v1/bin/activate
-En Windows:
+### Activar entorno virtual
 
-sh
-Parra-Postpartum-v1\Scripts\activate
-Procesar un archivo (audio o video)
-sh
-python post_partum.py <archivo_audio_o_video>
-Ejemplo de uso:
+*   shCopyEditsource Parra-Postpartum-v1/bin/activate
+    
+*   shCopyEditParra-Postpartum-v1\\Scripts\\activate
+    
 
-sh
-python post_partum.py entrevista.mp3
-python post_partum.py reunion_familiar.mp4
-El programa detecta automáticamente el tipo de archivo y realiza todas las etapas de conversión, procesamiento, diarización y transcripción, guardando todo en una carpeta `/resultados/<nombre_archivo>/.
+### Procesar un archivo (audio o video)
 
-🏭 Funcionamiento detallado del script principal (post_partum.py)
-Detecta el tipo de archivo:
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`shCopyEditpython post_partum.py` 
 
-Si es audio soportado (.wav, .mp3, .m4a), lo procesa directo.
+#### **Ejemplo de uso:**
 
-Si es video (.mp4, .avi, .mov, etc.), extrae el audio a MP3 automáticamente.
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   shCopyEditpython post_partum.py entrevista.mp3  python post_partum.py reunion_familiar.mp4   `
 
-Preprocesa el audio:
+> El programa detecta automáticamente el tipo de archivo y realiza todas las etapas de conversión, procesamiento, diarización y transcripción, guardando todo en una carpeta /resultados//.
 
-Convierte a WAV, fuerza 16kHz mono.
+🏭 Funcionamiento detallado del script principal (post\_partum.py)
+------------------------------------------------------------------
 
-Aplica filtrado pasa banda (300–3400 Hz) para mejorar calidad.
+1.  **Detecta el tipo de archivo:**
+    
+    *   Si es audio soportado (.wav, .mp3, .m4a), lo procesa directo.
+        
+    *   Si es video (.mp4, .avi, .mov, etc.), extrae el audio a MP3 automáticamente.
+        
+2.  **Preprocesa el audio:**
+    
+    *   Convierte a WAV, fuerza 16kHz mono.
+        
+    *   Aplica filtrado pasa banda (300–3400 Hz) para mejorar calidad.
+        
+    *   Normaliza el volumen para evitar clipping.
+        
+3.  **Diariza:**
+    
+    *   Usa pyannote para detectar intervalos y asignar un label a cada hablante.
+        
+    *   jsonCopyEdit\[ {"start\_time": 0.0, "end\_time": 11.5, "speaker": "SPEAKER\_00"}, {"start\_time": 11.5, "end\_time": 22.7, "speaker": "SPEAKER\_01"}\]
+        
+4.  **Transcribe:**
+    
+    *   Toma cada segmento identificado y lo transcribe usando Whisper.
+        
+    *   jsonCopyEdit\[ {"start\_time": 0.0, "end\_time": 11.5, "speaker": "SPEAKER\_00", "transcript": "buenos días a todos..."}, {"start\_time": 11.5, "end\_time": 22.7, "speaker": "SPEAKER\_01", "transcript": "gracias por venir."}\]
+        
+5.  **Guarda resultados en /resultados//:**
+    
+    *   Audio original
+        
+    *   Audio convertido (si aplica)
+        
+    *   Audio procesado (\*\_processed.wav)
+        
+    *   diarization\_results.json
+        
+    *   aligned\_transcription.json
+        
 
-Normaliza el volumen para evitar clipping.
 
-Diariza:
-
-Usa pyannote para detectar intervalos y asignar un label a cada hablante.
-
-Guarda un JSON tipo:
-
-json
-[
-  {"start_time": 0.0, "end_time": 11.5, "speaker": "SPEAKER_00"},
-  {"start_time": 11.5, "end_time": 22.7, "speaker": "SPEAKER_01"}
-]
-Transcribe:
-
-Toma cada segmento identificado y lo transcribe usando Whisper.
-
-Asigna la transcripción a cada segmento, ejemplo:
-
-json
-[
-  {"start_time": 0.0, "end_time": 11.5, "speaker": "SPEAKER_00", "transcript": "buenos días a todos..."},
-  {"start_time": 11.5, "end_time": 22.7, "speaker": "SPEAKER_01", "transcript": "gracias por venir."}
-]
-Guarda resultados en /resultados/<nombre_archivo>/:
-
-Audio original
-
-Audio convertido (si aplica)
-
-Audio procesado (*_processed.wav)
-
-diarization_results.json
-
-aligned_transcription.json
-
-📂 Estructura del proyecto
-text
-audio-ia-pipeline/
-│
-├── funciones/
-│   ├── __init__.py
-│   ├── procesamiento_de_audio.py
-│   ├── diarizacion.py
-│   ├── transcripcion.py
-│   └── convertir_video_a_audio.py
-│
-├── resultados/
-├── scripts/
-│   └── ejemplo_proceso.ipynb
-├── tests/
-├── .env.example
-├── .gitignore
-├── README.md
-├── requirements.txt
-├── setup_env.py
-├── post_partum.py
-└── LICENSE
 📝 Ejemplo de salida de resultados
-diarization_results.json
+----------------------------------
 
-json
-[
-  {"start_time": 0.0, "end_time": 9.8, "speaker": "SPEAKER_00"},
-  {"start_time": 9.8, "end_time": 16.5, "speaker": "SPEAKER_01"}
-]
-aligned_transcription.json
+*   jsonCopyEdit\[ {"start\_time": 0.0, "end\_time": 9.8, "speaker": "SPEAKER\_00"}, {"start\_time": 9.8, "end\_time": 16.5, "speaker": "SPEAKER\_01"}\]
+    
+*   jsonCopyEdit\[ {"start\_time": 0.0, "end\_time": 9.8, "speaker": "SPEAKER\_00", "transcript": "buenos días, doctor..."}, {"start\_time": 9.8, "end\_time": 16.5, "speaker": "SPEAKER\_01", "transcript": "buenos días, cómo está."}\]
+    
 
-json
-[
-  {"start_time": 0.0, "end_time": 9.8, "speaker": "SPEAKER_00", "transcript": "buenos días, doctor..."},
-  {"start_time": 9.8, "end_time": 16.5, "speaker": "SPEAKER_01", "transcript": "buenos días, cómo está."}
-]
 🛠️ Troubleshooting
-No se activa el entorno virtual:
-Asegúrate de usar python3.10 o superior y de estar en la carpeta raíz del proyecto.
+-------------------
 
-Error "No module named X":
-Verifica que el entorno virtual está activado antes de correr el script.
-
-Problemas con torch/cu121 en Mac o sin GPU:
-Cambia las líneas de torch en requirements.txt por versiones sin +cu121 ni el index extra y corre:
-
-sh
-pip install torch torchvision torchaudio
-ffmpeg no encontrado:
-Instálalo según tu sistema (ver sección de requisitos).
-
-Token de HuggingFace inválido:
-Genera un nuevo token desde huggingface.co/settings/tokens y colócalo en tu .env.
+*   **No se activa el entorno virtual:**Asegúrate de usar python3.10 o superior y de estar en la carpeta raíz del proyecto.
+    
+*   **Error “No module named X”:**Verifica que el entorno virtual está activado antes de correr el script.
+    
+*   nginxCopyEditpip install torch torchvision torchaudio
+    
+*   **ffmpeg no encontrado:**Instálalo según tu sistema (ver sección de requisitos).
+    
+*   **Token de HuggingFace inválido:**Genera un nuevo token desde [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) y colócalo en tu .env.
+    
 
 🔑 Variables de entorno
+-----------------------
+
 Copia .env.example a .env y coloca tu token de HuggingFace:
 
-sh
-cp .env.example .env
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   shCopyEditcp .env.example .env   `
+
 Luego edita el archivo .env:
 
-ini
-HUGGINGFACE_TOKEN=tu_token_de_huggingface_aqui
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   iniCopyEditHUGGINGFACE_TOKEN=tu_token_de_huggingface_aqui   `
+
 Este token es necesario para descargar modelos privados de pyannote/Whisper.
 
 🙋‍♂️ ¿Cómo contribuir?
-Haz un fork del repositorio y clona tu copia.
+-----------------------
 
-Crea una rama nueva para tus cambios:
-
-sh
-git checkout -b mi-nueva-funcionalidad
-Haz tus mejoras y comenta el código.
-
-Haz un commit claro y push:
-
-sh
-git add .
-git commit -m "Agregada nueva funcionalidad de X"
-git push origin mi-nueva-funcionalidad
-Haz un Pull Request desde tu fork.
-¡Tus sugerencias, mejoras y fixes son bienvenidos!
+1.  Haz un fork del repositorio y clona tu copia.
+    
+2.  shCopyEditgit checkout -b mi-nueva-funcionalidad
+    
+3.  Haz tus mejoras y comenta el código.
+    
+4.  shCopyEditgit add .git commit -m "Agregada nueva funcionalidad de X"git push origin mi-nueva-funcionalidad
+    
+5.  Haz un Pull Request desde tu fork.¡Tus sugerencias, mejoras y fixes son bienvenidos!
+    
 
 📚 Créditos y referencias
-pyannote.audio
+-------------------------
 
-Whisper (OpenAI)
-
-Transformers (Hugging Face)
-
-ffmpeg
+*   [pyannote.audio](https://github.com/pyannote/pyannote-audio)
+    
+*   [Whisper (OpenAI)](https://github.com/openai/whisper)
+    
+*   Transformers (Hugging Face)
+    
+*   [ffmpeg](https://ffmpeg.org/)
+    
 
 🪪 Licencia
+-----------
+
 MIT — puedes usar y modificar este proyecto libremente.
