@@ -1,0 +1,39 @@
+# Requisitos para el pipeline de procesamiento de audio y video con IA
+# Incluye soporte para CUDA 12.1, pyannote, Whisper, y utilidades de audio
+
+# PyTorch y dependencias con CUDA 12.1 (para GPU compatibles; de lo contrario, instalar torch normal)
+torch==2.3.0+cu121 --index-url https://download.pytorch.org/whl/cu121
+torchvision==0.18.0+cu121 --index-url https://download.pytorch.org/whl/cu121
+torchaudio==2.3.0+cu121 --index-url https://download.pytorch.org/whl/cu121
+
+# Modelos Hugging Face (Whisper, etc.)
+transformers==4.39.3
+huggingface-hub==0.23.1
+
+# Diarización con pyannote.audio
+pyannote.audio==3.2.1
+
+# Procesamiento y manipulación de audio
+soundfile==0.12.1
+librosa==0.10.1      # Procesamiento de audio (load, resample, etc.)
+scipy==1.13.0        # Filtros de audio y procesamiento matemático
+numpy==1.26.4
+
+# Utilidades varias
+python-dotenv==1.0.1   # Cargar variables de entorno desde .env
+jiwer==3.0.3           # Para métricas WER/CER de transcripción
+tqdm==4.66.4           # Barras de progreso
+httpx==0.27.0          # Requests asincrónicos (si usas APIs)
+send2trash==1.8.3      # Manejo seguro de archivos temporales
+Babel==2.14.0          # Internacionalización (usado por algunos paquetes)
+debugpy==1.8.1         # Debugging (útil para desarrollo)
+
+# Entorno interactivo (puedes comentar si no usas Jupyter)
+jupyterlab==4.2.1
+ipython==8.24.0
+
+# Solo para Windows (puedes comentar si usas Mac/Linux)
+pywin32==306
+
+# NOTA: Si usas CUDA diferente o solo CPU, instala torch, torchvision y torchaudio SIN el sufijo +cu121 y SIN --index-url
+

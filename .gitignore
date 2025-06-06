@@ -1,0 +1,47 @@
+# Carpetas de entornos virtuales
+venv/
+.venv/
+Parra-Postpartum-v1/
+
+# Resultados y archivos generados
+resultados/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de configuración de entorno
+.env
+.env.*
+
+# Jupyter/IPython
+.ipynb_checkpoints/
+*.ipynb
+
+# Archivos y logs temporales
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+
+# Archivos de sistema (Mac/Win)
+.DS_Store
+Icon?
+ehthumbs.db
+desktop.ini
+
+# Archivos generados por tests o builds
+build/
+dist/
+*.egg-info/
+
+# Visual Studio Code settings (opcional)
+.vscode/
+
+# Archivos de dependencias
+pip-log.txt
+
+# Otros archivos y carpetas ignorables
+*.sqlite3
