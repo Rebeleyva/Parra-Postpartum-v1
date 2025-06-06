@@ -54,7 +54,7 @@ El programa sigue este **flujo automático** para cualquier archivo de audio o v
 
    ```sh
    python3 -m pip install --upgrade pip
-   python3 setup_env.py
+   python3 scripts/setup_env.py
    ```
 
    > Esto instalará todas las dependencias en un entorno virtual llamado **Parra-Postpartum-v1**.
